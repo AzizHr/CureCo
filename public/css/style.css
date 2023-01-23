@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.error {
+    border: 1.4px solid red;
+}
+
+.success {
+    border: 1.4px solid green;
+}
+

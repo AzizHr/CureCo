@@ -62,8 +62,8 @@ class Product
         }
     }
 
-    // Edit One Cruise
-    public function editProduct($id, $data)
+    // Edit A Product
+    public function editProductWithImage($id, $data)
     {
         $this->db->query('UPDATE product SET name = :name , quantity = :quantity , price = :price , image = :image WHERE id = :id');
         $this->db->bind(':id', $id);
@@ -71,6 +71,20 @@ class Product
         $this->db->bind(':quantity', $data['quantity']);
         $this->db->bind(':price', $data['price']);
         $this->db->bind(':image', $data['image']);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function editProductWithoutImage($id, $data)
+    {
+        $this->db->query('UPDATE product SET name = :name , quantity = :quantity , price = :price WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':price', $data['price']);
         if ($this->db->execute()) {
             return true;
         } else {
@@ -139,6 +153,58 @@ class Product
         
         if ($this->db->resultSet()) {
             return $this->db->resultSet();
+        } else {
+            return false;
+        }
+    }
+
+    public function getNumberOfProducts()
+    {
+        $this->db->query('SELECT COUNT(id) as "numberOdProducts" FROM product');
+        
+        $row = $this->db->single();
+
+        if ($row) {
+            return $row['numberOdProducts'];
+        } else {
+            return false;
+        }
+    }
+
+    public function getPriceAverege()
+    {
+        $this->db->query('SELECT AVG(price) as "priceAverege" FROM product');
+        
+        $row = $this->db->single();
+
+        if ($row) {
+            return $row['priceAverege'];
+        } else {
+            return false;
+        }
+    }
+
+    public function getMaxPrice()
+    {
+        $this->db->query('SELECT MAX(price) as "maxPrice" FROM product');
+        
+        $row = $this->db->single();
+
+        if ($row) {
+            return $row['maxPrice'];
+        } else {
+            return false;
+        }
+    }
+
+    public function getMinPrice()
+    {
+        $this->db->query('SELECT MIN(price) as "minPrice" FROM product');
+        
+        $row = $this->db->single();
+
+        if ($row) {
+            return $row['minPrice'];
         } else {
             return false;
         }

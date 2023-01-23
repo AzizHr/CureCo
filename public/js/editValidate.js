@@ -1,5 +1,5 @@
 // Add 1
-const add1 = new Array(getById('name') , getById('quantity') , getById('price') , getById('image') , getById('name_error') , getById('quantity_error') , getById('price_error') , getById('image_error'))
+const add = new Array(getById('name') , getById('quantity') , getById('price') , getById('name_error') , getById('quantity_error') , getById('price_error'))
 
 let editForm = document.getElementById('edit')
 
@@ -9,7 +9,7 @@ let valideNumber = /[0-9]/
 editForm.addEventListener('submit' , e => {
     e.preventDefault()
 
-    if(validateName(add1[0] , add1[4]) & validateQuantity(add1[1] , add1[5]) & validatePrice(add1[2] , add1[6]) & checkImage(add1[3] , add1[7])) {
+    if(validateName(add[0] , add[3]) & validateQuantity(add[1] , add[4]) & validatePrice(add[2] , add[5])) {
         editForm.submit()
     }
 
@@ -98,21 +98,21 @@ function validatePrice(price , price_error) {
     }
 }
 
-function checkImage(image , image_error) {
-    if(image.files.length == 0) {
-        image_error.innerHTML = 'This Field can\'t be empty'
-        image_error.style.color = 'red'
-        image_error.style.fontSize = '13px'
-        image.classList.add('error')
-        image.classList.remove('success')
-        return false
-    } else {
-        image_error.innerHTML = ''
-        image.classList.add('success')
-        image.classList.remove('error')
-        return true
-    }
-}
+// function checkImage(image , image_error) {
+//     if(image.files.length == 0) {
+//         image_error.innerHTML = 'This Field can\'t be empty'
+//         image_error.style.color = 'red'
+//         image_error.style.fontSize = '13px'
+//         image.classList.add('error')
+//         image.classList.remove('success')
+//         return false
+//     } else {
+//         image_error.innerHTML = ''
+//         image.classList.add('success')
+//         image.classList.remove('error')
+//         return true
+//     }
+// }
 
 
 

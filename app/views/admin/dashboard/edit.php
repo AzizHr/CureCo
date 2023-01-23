@@ -28,7 +28,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col">
-                        <input type="submit" value="Update" class="btn btn-success btn-block" id="add_another_product">
+                        <input type="submit" value="Update" class="btn btn-success btn-block">
                     </div>
                 </div>
             </div>
@@ -36,5 +36,5 @@
         </div>
     </div>
 </div>
-<script src="<?php echo URLROOT ?>js/addValidate.js"></script>
+<script src="<?php echo URLROOT ?>js/editValidate.js"></script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

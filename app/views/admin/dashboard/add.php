@@ -6,7 +6,7 @@
             <p>Please fill out this form to add a new product</p>
             <form action="<?php echo URLROOT; ?>dashboard/add" method="post" enctype="multipart/form-data" id="add">
             <div>
-            <div class="form-group mt-3">
+            <div class="form-group my-3">
                     <label for="name1">Product Name: <sup>*</sup></label>
                     <input type="text" id="name1" name="name1" class="form-control form-control-lg">
                     <span class="" id="name1_error"></span>
@@ -34,7 +34,7 @@
             </div>
 
             <div id="anotherProduct" style="display:none; margin-top:40px;">
-            <div class="form-group mt-3">
+            <div class="form-group my-3">
                     <label for="name2">Product Name: <sup>*</sup></label>
                     <input type="text" id="name2" name="name2" class="form-control form-control-lg">
                     <span class="" id="name2_error"></span>
@@ -55,7 +55,7 @@
                     <span class="" id="quantity2_error"></span>
                 </div>
                 <div class="row mt-3">
-                    <div class="col">
+                    <div class="col mb-3">
                         <input type="submit" value="Add Two Products" class="btn btn-success btn-block">
                     </div>
                 </div>

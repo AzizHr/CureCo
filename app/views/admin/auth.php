@@ -1,9 +1,9 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
-<?php echo isset($_SESSION['error']) && !isset($_SESSION['admin_id']) ? $_SESSION['error'] : ''?>
-<div class="container my-2 mx2 pt-2 pb-2 text-light" style="background-color: #282A3A; border-radius: 10px; width:96%;">
+<?php echo flash('login_error') ?>
+<div class="container mt-4 mx2 pt-2 pb-2 text-light" style="background-color: #282A3A; border-radius: 10px; width:96%; height: 518px;">
 <div class="row">
   <div class="col-lg-6 col-md-12">
-    <img src="<?php echo URLROOT ?>img/login_image.jpg" alt="" style="width:100%; border-radius: 8px;">
+    <img src="<?php echo URLROOT ?>img/login_image.jpg" alt="" style="width:100%; height: 500px; border-radius: 8px;">
   </div>
   <div class="col-lg-6 col-md-12">
     <form action="<?php echo URLROOT ?>admin/auth" class="mt-5" method="POST" id="login">
@@ -24,4 +24,5 @@
 </div>
 </div>
 </div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

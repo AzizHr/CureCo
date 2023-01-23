@@ -14,7 +14,18 @@ class Dashboard extends Controller
         }
 
         $products = $this->productModel->getProducts();
-        $data['products'] = $products;
+        $numberOfProducts = $this->productModel->getNumberOfProducts();
+        $priceAverege = $this->productModel->getPriceAverege();
+        $maxPrice = $this->productModel->getMaxPrice();
+        $minPrice = $this->productModel->getMinPrice();
+        $data = [
+            'products' => $products,
+            'numberOfProducts' => intval($numberOfProducts),
+            'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
+            'maxPrice' => floatval($maxPrice),
+            'minPrice' => floatval($minPrice),
+        ];
+
         $this->view('admin/dashboard', $data);
     }
 
@@ -30,23 +41,28 @@ class Dashboard extends Controller
             // Init data
             $data = [
                 'name1' => trim($_POST['name1']),
-                'quantity1' => trim($_POST['quantity1']) ,
+                'quantity1' => trim($_POST['quantity1']),
                 'price1' => trim($_POST['price1']),
-                'image1' => $_FILES['image1']['name'] ,
+                'image1' => $_FILES['image1']['name'],
                 'name2' => trim($_POST['name2']),
-                'quantity2' => trim($_POST['quantity2']) ,
+                'quantity2' => trim($_POST['quantity2']),
                 'price2' => trim($_POST['price2']),
                 'image2' => $_FILES['image2']['name']
             ];
 
             move_uploaded_file($_FILES['image1']['tmp_name'], 'uploads/' . $data['image1']);
             move_uploaded_file($_FILES['image2']['tmp_name'], 'uploads/' . $data['image2']);
-                if ($this->productModel->addProduct($data)) {
-                    redirect('dashboard/index');
-                } else {
-                    die('Something went wrong');
-                }
+            if ($this->productModel->addProduct($data)) {
+                flash('add_success', 'Two Products Added With Success');
+                redirect('dashboard/index');
+                
+            } else {
+                die('Something went wrong');
+            }
         } else {
+            if (!isset($_SESSION['admin_id'])) {
+                redirect('admin/auth');
+            }
             // Load view
             $this->view('admin/dashboard/add');
         }
@@ -65,26 +81,42 @@ class Dashboard extends Controller
             // Init data
             $data = [
                 'name' => trim($_POST['name']),
-                'quantity' => trim($_POST['quantity']) ,
+                'quantity' => trim($_POST['quantity']),
                 'price' => trim($_POST['price']),
                 'image' => $_FILES['image']['name']
             ];
 
-            move_uploaded_file($_FILES['image']['tmp_name'], 'uploads/' . $data['image']);
-                if ($this->productModel->editProduct($id , $data)) {
+            if (empty($data['image'])) {
+                if ($this->productModel->editProductWithoutImage($id, $data)) {
                     redirect('dashboard/index');
                 } else {
                     die('Something went wrong');
                 }
+            } else {
+                
+                if ($this->productModel->editProductWithImage($id, $data)) {
+                    move_uploaded_file($_FILES['image']['tmp_name'], 'uploads/' . $data['image']);
+                    redirect('dashboard/index');
+                } else {
+                    die('Something went wrong');
+                }
+            }
         } else {
+            if (!isset($_SESSION['admin_id'])) {
+                redirect('admin/auth');
+            }
             // Load view
             $this->view('admin/dashboard/add');
         }
     }
 
-    
+
     public function get($id)
     {
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admin/auth');
+        }
+
         $product = $this->productModel->getProduct($id);
         $data['product'] = $product;
 
@@ -93,15 +125,23 @@ class Dashboard extends Controller
 
     public function productDetails($id)
     {
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admin/auth');
+        }
+
         $product = $this->productModel->getProduct($id);
         $data['product'] = $product;
 
         $this->view('admin/dashboard/productDetails', $data);
     }
-    
+
 
     public function delete($id)
     {
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admin/auth');
+        }
+
         if ($this->productModel->deleteProduct($id)) {
             redirect('dashboard/index');
         } else {
@@ -111,10 +151,24 @@ class Dashboard extends Controller
 
     public function sortByPriceAsc()
     {
-        if ($this->productModel->sortByPriceASC()) {
-            $products = $this->productModel->sortByPriceASC();
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admin/auth');
+        }
 
-            $data['products'] = $products;
+        if ($this->productModel->sortByPriceASC()) {
+
+            $products = $this->productModel->sortByPriceASC();
+            $numberOfProducts = $this->productModel->getNumberOfProducts();
+            $priceAverege = $this->productModel->getPriceAverege();
+            $maxPrice = $this->productModel->getMaxPrice();
+            $minPrice = $this->productModel->getMinPrice();
+            $data = [
+                'products' => $products,
+                'numberOfProducts' => intval($numberOfProducts),
+                'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
+                'maxPrice' => floatval($maxPrice),
+                'minPrice' => floatval($minPrice),
+            ];
 
             $this->view('admin/dashboard', $data);
         }
@@ -122,10 +176,24 @@ class Dashboard extends Controller
 
     public function sortByPriceDesc()
     {
-        if ($this->productModel->sortByPriceDESC()) {
-            $products = $this->productModel->sortByPriceDESC();
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admin/auth');
+        }
 
-            $data['products'] = $products;
+        if ($this->productModel->sortByPriceDESC()) {
+
+            $products = $this->productModel->sortByPriceDESC();
+            $numberOfProducts = $this->productModel->getNumberOfProducts();
+            $priceAverege = $this->productModel->getPriceAverege();
+            $maxPrice = $this->productModel->getMaxPrice();
+            $minPrice = $this->productModel->getMinPrice();
+            $data = [
+                'products' => $products,
+                'numberOfProducts' => intval($numberOfProducts),
+                'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
+                'maxPrice' => floatval($maxPrice),
+                'minPrice' => floatval($minPrice),
+            ];
 
             $this->view('admin/dashboard', $data);
         }
@@ -133,10 +201,23 @@ class Dashboard extends Controller
 
     public function sortByDateAsc()
     {
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admin/auth');
+        }
+
         if ($this->productModel->sortByDateASC()) {
             $products = $this->productModel->sortByDateASC();
-
-            $data['products'] = $products;
+            $numberOfProducts = $this->productModel->getNumberOfProducts();
+            $priceAverege = $this->productModel->getPriceAverege();
+            $maxPrice = $this->productModel->getMaxPrice();
+            $minPrice = $this->productModel->getMinPrice();
+            $data = [
+                'products' => $products,
+                'numberOfProducts' => intval($numberOfProducts),
+                'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
+                'maxPrice' => floatval($maxPrice),
+                'minPrice' => floatval($minPrice),
+            ];
 
             $this->view('admin/dashboard', $data);
         }
@@ -144,10 +225,23 @@ class Dashboard extends Controller
 
     public function sortByDateDesc()
     {
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admin/auth');
+        }
+
         if ($this->productModel->sortByDateDESC()) {
             $products = $this->productModel->sortByDateDESC();
-
-            $data['products'] = $products;
+            $numberOfProducts = $this->productModel->getNumberOfProducts();
+            $priceAverege = $this->productModel->getPriceAverege();
+            $maxPrice = $this->productModel->getMaxPrice();
+            $minPrice = $this->productModel->getMinPrice();
+            $data = [
+                'products' => $products,
+                'numberOfProducts' => intval($numberOfProducts),
+                'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
+                'maxPrice' => floatval($maxPrice),
+                'minPrice' => floatval($minPrice),
+            ];
 
             $this->view('admin/dashboard', $data);
         }
@@ -156,6 +250,10 @@ class Dashboard extends Controller
     public function search()
     {
 
+        if (!isset($_SESSION['admin_id'])) {
+            redirect('admin/auth');
+        }
+        
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
@@ -165,15 +263,36 @@ class Dashboard extends Controller
 
             $searchName = trim($_POST['search_name']);
 
-                if ($this->productModel->searchInProducts($searchName)) {
-                    $products = $this->productModel->searchInProducts($searchName);
-                    $data['products'] = $products;
-                    $this->view('admin/dashboard', $data);
-                } else {
-                    $data['no_result'] = 'No Results Found';
-                    $this->view('admin/dashboard', $data);
-                }
+            if ($this->productModel->searchInProducts($searchName)) {
+                $products = $this->productModel->searchInProducts($searchName);
+                $numberOfProducts = $this->productModel->getNumberOfProducts();
+                $priceAverege = $this->productModel->getPriceAverege();
+                $maxPrice = $this->productModel->getMaxPrice();
+                $minPrice = $this->productModel->getMinPrice();
+                $data = [
+                    'products' => $products,
+                    'numberOfProducts' => intval($numberOfProducts),
+                    'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
+                    'maxPrice' => floatval($maxPrice),
+                    'minPrice' => floatval($minPrice),
+                ];
+                $this->view('admin/dashboard', $data);
+            } else {
+                $products = $this->productModel->searchInProducts($searchName);
+                $numberOfProducts = $this->productModel->getNumberOfProducts();
+                $priceAverege = $this->productModel->getPriceAverege();
+                $maxPrice = $this->productModel->getMaxPrice();
+                $minPrice = $this->productModel->getMinPrice();
+                $data = [
+                    'products' => $products,
+                    'numberOfProducts' => intval($numberOfProducts),
+                    'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
+                    'maxPrice' => floatval($maxPrice),
+                    'minPrice' => floatval($minPrice),
+                ];
+                $data['no_result'] = 'No Results Found';
+                $this->view('admin/dashboard', $data);
+            }
         }
-
     }
 }

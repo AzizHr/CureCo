@@ -9,18 +9,30 @@ class Admin extends Controller
     $this->productModel = $this->model('Product');
   }
 
-  public function index() {
+  public function index()
+  {
     $this->view('admin/auth');
   }
   public function dashboard()
   {
     if (!isset($_SESSION['admin_id'])) {
       redirect('admin/auth');
-  }
+    }
 
-  $products = $this->productModel->getProducts();
-  $data['products'] = $products;
-  $this->view('admin/dashboard', $data);
+    $products = $this->productModel->getProducts();
+    $numberOfProducts = $this->productModel->getNumberOfProducts();
+    $priceAverege = $this->productModel->getPriceAverege();
+    $maxPrice = $this->productModel->getMaxPrice();
+    $minPrice = $this->productModel->getMinPrice();
+    $data = [
+      'products' => $products,
+      'numberOfProducts' => intval($numberOfProducts),
+      'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
+      'maxPrice' => floatval($maxPrice),
+      'minPrice' => floatval($minPrice),
+    ];
+
+    $this->view('admin/dashboard', $data);
   }
 
   public function auth()
@@ -44,11 +56,11 @@ class Admin extends Controller
         // Create Session
         $this->createUserSession($loggedInAdmin);
       } else {
-        $_SESSION['error'] = '<div class="alert alert-danger">Email or Password invalid</div>';
+        flash('login_error' , 'Email or Password no valid' , 'alert alert-danger');
         redirect('admin/auth');
-        // message('Email or Password invalid' , 'danger');
       }
     } else {
+      unset($_SESSION['error']);
       if (isset($_SESSION['admin_id'])) {
         redirect('admin/dashboard');
       }

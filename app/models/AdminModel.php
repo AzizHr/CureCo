@@ -10,7 +10,7 @@ class AdminModel
 
 
 
-  // Login User
+  // Login Admin
   public function login($email, $password)
   {
     $this->db->query('SELECT * FROM admin WHERE email = :email');
@@ -25,7 +25,7 @@ class AdminModel
 
   }
 
-  // Find user by email
+  // Find admin by email
   public function findAdminByEmail($email)
   {
     $this->db->query('SELECT * FROM admin WHERE email = :email');

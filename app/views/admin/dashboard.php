@@ -79,16 +79,18 @@
       </div>
     </div>
     <div class="col py-3 mt-2 doIt">
-      <?php echo flash('add_success') ?>
+      <?php flash('add_success') ?>
+      <?php flash('edit_success') ?>
+      <?php flash('delete_success') ?>
       <div class="container row gap-4 justify-content-center">
         <div class="col-lg-2 col-md-5 border py-2 bg-primary text-light">
           <i class="fa fa-flag"></i>
           <h5 class="mt-2">All Products</h5>
-          <b><?php echo $data['numberOfProducts'] ?></b>
+          <b><?php echo $data['numberOfProducts'] . ' Items' ?></b>
         </div>
         <div class="col-lg-2 col-md-5 border py-2  bg-warning">
           <i class="fa-solid fa-gauge-simple"></i>
-          <h5 class="mt-2">The Averege</h5>
+          <h5 class="mt-2">The Average</h5>
           <b><?php echo $data['priceAverege'] . ' $' ?></b>
         </div>
         <div class="col-lg-2 col-md-5 border py-2  bg-success text-light">
@@ -123,7 +125,6 @@
             </tr>
           </thead>
           <tbody>
-            <?php if (!empty($data['products'])) : ?>
               <?php foreach ($data['products'] as $product) : ?>
                 <tr>
                   <td><?php echo $product['id'] ?></td>
@@ -137,12 +138,6 @@
                   <td><a href="<?php echo URLROOT . 'dashboard/get/' . $product['id'] ?>" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a></td>
                 </tr>
               <?php endforeach ?>
-            <?php endif ?>
-            <?php if (empty($data['products'])) : ?>
-              <tr>
-                <td> <?php echo $data['no_result'] ?></td>
-              </tr>
-            <?php endif ?>
           </tbody>
         </table>
       </div>
@@ -164,12 +159,6 @@
     }).then((result) => {
       if (result.isConfirmed) {
         location.href = link;
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'The Product Deleted With Success',
-          timer: 1500
-        })
       }
     })
   }

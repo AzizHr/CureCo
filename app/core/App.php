@@ -1,9 +1,5 @@
 <?php
-  /*
-   * App Core Class
-   * Creates URL & loads core controller
-   * URL FORMAT - /controller/method/params
-   */
+
   class App {
     protected $currentController = 'Admin';
     protected $currentMethod = 'index';

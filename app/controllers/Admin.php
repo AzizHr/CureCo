@@ -56,7 +56,7 @@ class Admin extends Controller
         // Create Session
         $this->createUserSession($loggedInAdmin);
       } else {
-        flash('login_error' , 'Email or Password no valid' , 'alert alert-danger');
+        flash("login_error", "Email or Password invalid", "alert alert-danger");
         redirect('admin/auth');
       }
     } else {

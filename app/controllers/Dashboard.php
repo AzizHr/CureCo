@@ -53,7 +53,7 @@ class Dashboard extends Controller
             move_uploaded_file($_FILES['image1']['tmp_name'], 'uploads/' . $data['image1']);
             move_uploaded_file($_FILES['image2']['tmp_name'], 'uploads/' . $data['image2']);
             if ($this->productModel->addProduct($data)) {
-                flash('add_success', 'Two Products Added With Success');
+                flash('add_success', 'Two Products Have Been Added With Success');
                 redirect('dashboard/index');
                 
             } else {
@@ -88,6 +88,7 @@ class Dashboard extends Controller
 
             if (empty($data['image'])) {
                 if ($this->productModel->editProductWithoutImage($id, $data)) {
+                    flash('edit_success', 'This Product Has Been Edited With Sucess');
                     redirect('dashboard/index');
                 } else {
                     die('Something went wrong');
@@ -143,6 +144,7 @@ class Dashboard extends Controller
         }
 
         if ($this->productModel->deleteProduct($id)) {
+            flash('delete_success', 'This Product Has Been Deleted With Sucess');
             redirect('dashboard/index');
         } else {
             redirect('dashboard/index');
@@ -284,13 +286,13 @@ class Dashboard extends Controller
                 $maxPrice = $this->productModel->getMaxPrice();
                 $minPrice = $this->productModel->getMinPrice();
                 $data = [
-                    'products' => $products,
+                    'products' => $this->productModel->getProducts() ,
                     'numberOfProducts' => intval($numberOfProducts),
                     'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
                     'maxPrice' => floatval($maxPrice),
                     'minPrice' => floatval($minPrice),
                 ];
-                $data['no_result'] = 'No Results Found';
+
                 $this->view('admin/dashboard', $data);
             }
         }

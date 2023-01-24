@@ -1,5 +1,8 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
-<?php echo flash('login_error') ?>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<?php flash('login_error') ?>
 <div class="container mt-4 mx2 pt-2 pb-2 text-light" style="background-color: #282A3A; border-radius: 10px; width:96%; height: 518px;">
 <div class="row">
   <div class="col-lg-6 col-md-12">
@@ -24,5 +27,4 @@
 </div>
 </div>
 </div>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

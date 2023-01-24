@@ -11,8 +11,6 @@ class Product
     // Add Product
     public function addProduct($data)
     {
-        // var_dump($data);
-        // exit;
         $this->db->query('INSERT INTO product (name , quantity , price , image) VALUES(:name1 , :quantity1 , :price1 , :image1) , (:name2 , :quantity2 , :price2 , :image2)');
         // Bind values
         $this->db->bind(':name1', $data['name1']);

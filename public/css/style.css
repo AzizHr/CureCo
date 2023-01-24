@@ -5,10 +5,9 @@
 }
 
 .error {
-    border: 1.4px solid red;
+  border: 1.4px solid red;
 }
 
 .success {
-    border: 1.4px solid green;
+  border: 1.4px solid green;
 }
-

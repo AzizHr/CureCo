@@ -4,14 +4,14 @@ class Dashboard extends Controller
     private $productModel;
     public function __construct()
     {
+        if (!isLoggedIn()) {
+            redirect('admin/auth');
+        }
         $this->productModel = $this->model('Product');
     }
 
     public function index()
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
 
         $products = $this->productModel->getProducts();
         $numberOfProducts = $this->productModel->getNumberOfProducts();
@@ -55,14 +55,10 @@ class Dashboard extends Controller
             if ($this->productModel->addProduct($data)) {
                 flash('add_success', 'Two Products Have Been Added With Success');
                 redirect('dashboard/index');
-                
             } else {
                 die('Something went wrong');
             }
         } else {
-            if (!isset($_SESSION['admin_id'])) {
-                redirect('admin/auth');
-            }
             // Load view
             $this->view('admin/dashboard/add');
         }
@@ -94,7 +90,7 @@ class Dashboard extends Controller
                     die('Something went wrong');
                 }
             } else {
-                
+
                 if ($this->productModel->editProductWithImage($id, $data)) {
                     move_uploaded_file($_FILES['image']['tmp_name'], 'uploads/' . $data['image']);
                     redirect('dashboard/index');
@@ -103,9 +99,6 @@ class Dashboard extends Controller
                 }
             }
         } else {
-            if (!isset($_SESSION['admin_id'])) {
-                redirect('admin/auth');
-            }
             // Load view
             $this->view('admin/dashboard/add');
         }
@@ -114,9 +107,6 @@ class Dashboard extends Controller
 
     public function get($id)
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
 
         $product = $this->productModel->getProduct($id);
         $data['product'] = $product;
@@ -126,9 +116,6 @@ class Dashboard extends Controller
 
     public function productDetails($id)
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
 
         $product = $this->productModel->getProduct($id);
         $data['product'] = $product;
@@ -139,9 +126,6 @@ class Dashboard extends Controller
 
     public function delete($id)
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
 
         if ($this->productModel->deleteProduct($id)) {
             flash('delete_success', 'This Product Has Been Deleted With Sucess');
@@ -153,9 +137,6 @@ class Dashboard extends Controller
 
     public function sortByPriceAsc()
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
 
         if ($this->productModel->sortByPriceASC()) {
 
@@ -178,9 +159,6 @@ class Dashboard extends Controller
 
     public function sortByPriceDesc()
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
 
         if ($this->productModel->sortByPriceDESC()) {
 
@@ -203,9 +181,7 @@ class Dashboard extends Controller
 
     public function sortByDateAsc()
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
+
 
         if ($this->productModel->sortByDateASC()) {
             $products = $this->productModel->sortByDateASC();
@@ -227,9 +203,6 @@ class Dashboard extends Controller
 
     public function sortByDateDesc()
     {
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
 
         if ($this->productModel->sortByDateDESC()) {
             $products = $this->productModel->sortByDateDESC();
@@ -252,10 +225,7 @@ class Dashboard extends Controller
     public function search()
     {
 
-        if (!isset($_SESSION['admin_id'])) {
-            redirect('admin/auth');
-        }
-        
+
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
@@ -286,7 +256,7 @@ class Dashboard extends Controller
                 $maxPrice = $this->productModel->getMaxPrice();
                 $minPrice = $this->productModel->getMinPrice();
                 $data = [
-                    'products' => $this->productModel->getProducts() ,
+                    'products' => $this->productModel->getProducts(),
                     'numberOfProducts' => intval($numberOfProducts),
                     'priceAverege' => number_format((float)$priceAverege, 2, '.', ''),
                     'maxPrice' => floatval($maxPrice),

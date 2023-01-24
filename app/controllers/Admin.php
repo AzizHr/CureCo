@@ -5,6 +5,9 @@ class Admin extends Controller
   private $productModel;
   public function __construct()
   {
+    if (!isLoggedIn()) {
+      redirect('admin/auth');
+    }
     $this->adminModel = $this->model('AdminModel');
     $this->productModel = $this->model('Product');
   }
@@ -15,9 +18,6 @@ class Admin extends Controller
   }
   public function dashboard()
   {
-    if (!isset($_SESSION['admin_id'])) {
-      redirect('admin/auth');
-    }
 
     $products = $this->productModel->getProducts();
     $numberOfProducts = $this->productModel->getNumberOfProducts();
@@ -60,10 +60,6 @@ class Admin extends Controller
         redirect('admin/auth');
       }
     } else {
-      unset($_SESSION['error']);
-      if (isset($_SESSION['admin_id'])) {
-        redirect('admin/dashboard');
-      }
       // Init data
       $data = [
         'email' => '',
@@ -89,14 +85,5 @@ class Admin extends Controller
     unset($_SESSION['admin_name']);
     session_destroy();
     redirect('admin/auth');
-  }
-
-  public function isLoggedIn()
-  {
-    if (isset($_SESSION['admin_id'])) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

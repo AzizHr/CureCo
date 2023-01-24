@@ -125,7 +125,7 @@ class Product
     public function sortByDateASC()
     {
         $this->db->query('SELECT * FROM product ORDER BY date ASC');
-        
+
         if ($this->db->resultSet()) {
             return $this->db->resultSet();
         } else {
@@ -136,7 +136,7 @@ class Product
     public function sortByDateDESC()
     {
         $this->db->query('SELECT * FROM product ORDER BY date DESC');
-        
+
         if ($this->db->resultSet()) {
             return $this->db->resultSet();
         } else {
@@ -148,7 +148,7 @@ class Product
     {
         $this->db->query('SELECT * FROM product WHERE name LIKE "%" :name "%"');
         $this->db->bind(':name', $name);
-        
+
         if ($this->db->resultSet()) {
             return $this->db->resultSet();
         } else {
@@ -159,7 +159,7 @@ class Product
     public function getNumberOfProducts()
     {
         $this->db->query('SELECT COUNT(id) as "numberOdProducts" FROM product');
-        
+
         $row = $this->db->single();
 
         if ($row) {
@@ -172,7 +172,7 @@ class Product
     public function getPriceAverege()
     {
         $this->db->query('SELECT AVG(price) as "priceAverege" FROM product');
-        
+
         $row = $this->db->single();
 
         if ($row) {
@@ -185,7 +185,7 @@ class Product
     public function getMaxPrice()
     {
         $this->db->query('SELECT MAX(price) as "maxPrice" FROM product');
-        
+
         $row = $this->db->single();
 
         if ($row) {
@@ -198,7 +198,7 @@ class Product
     public function getMinPrice()
     {
         $this->db->query('SELECT MIN(price) as "minPrice" FROM product');
-        
+
         $row = $this->db->single();
 
         if ($row) {

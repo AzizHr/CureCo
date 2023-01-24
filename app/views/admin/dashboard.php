@@ -125,19 +125,19 @@
             </tr>
           </thead>
           <tbody>
-              <?php foreach ($data['products'] as $product) : ?>
-                <tr>
-                  <td><?php echo $product['id'] ?></td>
-                  <td><img style="width: 70px; height:70px; border-radius: 6px;" src="<?php echo URLROOT . 'uploads/' . $product['image'] ?>" /></td>
-                  <td><?php echo $product['name'] ?></td>
-                  <td><?php echo $product['quantity'] ?></td>
-                  <td><?php echo $product['price'] . ' $' ?></td>
-                  <td><?php echo $product['date'] ?></td>
-                  <td><a href="<?php echo URLROOT . 'dashboard/productDetails/' . $product['id'] ?>" class="btn btn-sm btn-success"><i class="fa-sharp fa-solid fa-eye"></i></a></td>
-                  <td><a class="btn btn-sm btn-danger" id="delete" onclick="deletItem(`<?php echo URLROOT . 'dashboard/delete/' . $product['id'] ?>`)"><i class="fa-solid fa-trash"></i></a></td>
-                  <td><a href="<?php echo URLROOT . 'dashboard/get/' . $product['id'] ?>" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a></td>
-                </tr>
-              <?php endforeach ?>
+            <?php foreach ($data['products'] as $product) : ?>
+              <tr>
+                <td><?php echo $product['id'] ?></td>
+                <td><img style="width: 70px; height:70px; border-radius: 6px;" src="<?php echo URLROOT . 'uploads/' . $product['image'] ?>" /></td>
+                <td><?php echo $product['name'] ?></td>
+                <td><?php echo $product['quantity'] ?></td>
+                <td><?php echo $product['price'] . ' $' ?></td>
+                <td><?php echo $product['date'] ?></td>
+                <td><a href="<?php echo URLROOT . 'dashboard/productDetails/' . $product['id'] ?>" class="btn btn-sm btn-success"><i class="fa-sharp fa-solid fa-eye"></i></a></td>
+                <td><a class="btn btn-sm btn-danger" id="delete" onclick="deletItem(`<?php echo URLROOT . 'dashboard/delete/' . $product['id'] ?>`)"><i class="fa-solid fa-trash"></i></a></td>
+                <td><a href="<?php echo URLROOT . 'dashboard/get/' . $product['id'] ?>" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a></td>
+              </tr>
+            <?php endforeach ?>
           </tbody>
         </table>
       </div>

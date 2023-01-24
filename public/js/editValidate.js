@@ -1,101 +1,111 @@
 // Add 1
-const add = new Array(getById('name') , getById('quantity') , getById('price') , getById('name_error') , getById('quantity_error') , getById('price_error'))
+const add = new Array(
+  getById("name"),
+  getById("quantity"),
+  getById("price"),
+  getById("name_error"),
+  getById("quantity_error"),
+  getById("price_error")
+);
 
-let editForm = document.getElementById('edit')
+let editForm = document.getElementById("edit");
 
-let valideName = /[^0-9]/
-let valideNumber = /[0-9]/
+let valideName = /[^0-9]/;
+let valideNumber = /[0-9]/;
 
-editForm.addEventListener('submit' , e => {
-    e.preventDefault()
+editForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    if(validateName(add[0] , add[3]) & validateQuantity(add[1] , add[4]) & validatePrice(add[2] , add[5])) {
-        editForm.submit()
-    }
+  if (
+    validateName(add[0], add[3]) &
+    validateQuantity(add[1], add[4]) &
+    validatePrice(add[2], add[5])
+  ) {
+    editForm.submit();
+  }
+});
 
-})
-
-function validateName(name , name_error) {
-    if(name.value.trim() === '') {
-        name_error.innerHTML = 'Name can\'t be empty'
-        name_error.style.color = 'red'
-        name_error.style.fontSize = '13px'
-        name.classList.add('error')
-        name.classList.remove('success')
-        return false
-    } else if(valideName.test(name.value) == false) {
-        name_error.innerHTML = 'Please enter a valid name'
-        name_error.style.color = 'red'
-        name_error.style.fontSize = '13px'
-        name.classList.add('error')
-        name.classList.remove('success')
-        return false
-    } else {
-        name_error.innerHTML = ''
-        name.classList.add('success')
-        name.classList.remove('error')
-        return true
-    }
+function validateName(name, name_error) {
+  if (name.value.trim() === "") {
+    name_error.innerHTML = "Name can't be empty";
+    name_error.style.color = "red";
+    name_error.style.fontSize = "13px";
+    name.classList.add("error");
+    name.classList.remove("success");
+    return false;
+  } else if (valideName.test(name.value) == false) {
+    name_error.innerHTML = "Please enter a valid name";
+    name_error.style.color = "red";
+    name_error.style.fontSize = "13px";
+    name.classList.add("error");
+    name.classList.remove("success");
+    return false;
+  } else {
+    name_error.innerHTML = "";
+    name.classList.add("success");
+    name.classList.remove("error");
+    return true;
+  }
 }
 
-function validateQuantity(quantity , quantity_error) {
-    if(quantity.value.trim() === '') {
-        quantity_error.innerHTML = 'Quantity can\'t be empty'
-        quantity_error.style.color = 'red'
-        quantity_error.style.fontSize = '13px'
-        quantity.classList.add('error')
-        quantity.classList.remove('success')
-        return false
-    } else if(parseInt(quantity.value.trim()) <= 0) {
-        quantity_error.innerHTML = 'Quantity must be at least 1'
-        quantity_error.style.color = 'red'
-        quantity_error.style.fontSize = '13px'
-        quantity.classList.add('error')
-        quantity.classList.remove('success')
-        return false
-    } else if(valideNumber.test(quantity.value) == false) {
-        quantity_error.innerHTML = 'Quantity must be only positive numbers'
-        quantity_error.style.color = 'red'
-        quantity_error.style.fontSize = '13px'
-        quantity.classList.add('error')
-        quantity.classList.remove('success')
-        return false
-    } else {
-        quantity_error.innerHTML = ''
-        quantity.classList.add('success')
-        quantity.classList.remove('error')
-        return true
-    }
+function validateQuantity(quantity, quantity_error) {
+  if (quantity.value.trim() === "") {
+    quantity_error.innerHTML = "Quantity can't be empty";
+    quantity_error.style.color = "red";
+    quantity_error.style.fontSize = "13px";
+    quantity.classList.add("error");
+    quantity.classList.remove("success");
+    return false;
+  } else if (parseInt(quantity.value.trim()) <= 0) {
+    quantity_error.innerHTML = "Quantity must be at least 1";
+    quantity_error.style.color = "red";
+    quantity_error.style.fontSize = "13px";
+    quantity.classList.add("error");
+    quantity.classList.remove("success");
+    return false;
+  } else if (valideNumber.test(quantity.value) == false) {
+    quantity_error.innerHTML = "Quantity must be only positive numbers";
+    quantity_error.style.color = "red";
+    quantity_error.style.fontSize = "13px";
+    quantity.classList.add("error");
+    quantity.classList.remove("success");
+    return false;
+  } else {
+    quantity_error.innerHTML = "";
+    quantity.classList.add("success");
+    quantity.classList.remove("error");
+    return true;
+  }
 }
 
-function validatePrice(price , price_error) {
-    if(price.value.trim() === '') {
-        price_error.innerHTML = 'Quantity can\'t be empty'
-        price_error.style.color = 'red'
-        price_error.style.fontSize = '13px'
-        price.classList.add('error')
-        price.classList.remove('success')
-        return false
-    } else if(parseInt(price.value.trim()) <= 0) {
-        price_error.innerHTML = 'Price must be at least 1'
-        price_error.style.color = 'red'
-        price_error.style.fontSize = '13px'
-        price.classList.add('error')
-        price.classList.remove('success')
-        return false
-    } else if(valideNumber.test(price.value) == false) {
-        price_error.innerHTML = 'Quantity must be only numbers'
-        price_error.style.color = 'red'
-        price_error.style.fontSize = '13px'
-        price.classList.add('error')
-        price.classList.remove('success')
-        return false
-    } else {
-        price_error.innerHTML = ''
-        price.classList.add('success')
-        price.classList.remove('error')
-        return true
-    }
+function validatePrice(price, price_error) {
+  if (price.value.trim() === "") {
+    price_error.innerHTML = "Quantity can't be empty";
+    price_error.style.color = "red";
+    price_error.style.fontSize = "13px";
+    price.classList.add("error");
+    price.classList.remove("success");
+    return false;
+  } else if (parseInt(price.value.trim()) <= 0) {
+    price_error.innerHTML = "Price must be at least 1";
+    price_error.style.color = "red";
+    price_error.style.fontSize = "13px";
+    price.classList.add("error");
+    price.classList.remove("success");
+    return false;
+  } else if (valideNumber.test(price.value) == false) {
+    price_error.innerHTML = "Quantity must be only numbers";
+    price_error.style.color = "red";
+    price_error.style.fontSize = "13px";
+    price.classList.add("error");
+    price.classList.remove("success");
+    return false;
+  } else {
+    price_error.innerHTML = "";
+    price.classList.add("success");
+    price.classList.remove("error");
+    return true;
+  }
 }
 
 // function checkImage(image , image_error) {
@@ -114,8 +124,6 @@ function validatePrice(price , price_error) {
 //     }
 // }
 
-
-
 function getById(id) {
-    return document.getElementById(id)
+  return document.getElementById(id);
 }

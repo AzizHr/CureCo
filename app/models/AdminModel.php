@@ -17,12 +17,11 @@ class AdminModel
     $this->db->bind(':email', $email);
 
     $row = $this->db->single();
-    if($row['password'] == $password) {
+    if ($row['password'] == $password) {
       return $row;
     } else {
       return false;
     }
-
   }
 
   // Find admin by email
